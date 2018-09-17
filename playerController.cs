@@ -30,16 +30,17 @@ public class playerController : MonoBehaviour
 	{
 		ammoCount.text = Bullets.ToString();
 		
-	    //Basic Movement
-		transform.Rotate(0,Input.GetAxis("Horizontal") * Time.deltaTime * RotateSpeed,0);
-		transform.Translate(0,0,Input.GetAxis("Vertical") * Time.deltaTime * MoveSpeed);
-			//Slow down when backing up (back button is negative numbers)
-			MoveSpeed = Input.GetAxis("Vertical") <= 0 ? baseSpeed/5 : baseSpeed;
-		
+	    PlayerMovement();
+
+		PlayerAimAttack();
+	}
+
+	private void PlayerAimAttack()
+	{
 		//Create aiming object (Aim Weapon) when button held down
 		aimArea.SetActive(Input.GetButton("Aim"));
-		
-		if (Input.GetButtonUp("Aim")) 
+
+		if (Input.GetButtonUp("Aim"))
 		{
 			GameObject[] enemyArray = GameObject.FindGameObjectsWithTag("enemyActive");
 
@@ -49,5 +50,13 @@ public class playerController : MonoBehaviour
 			}
 		}
 	}
-	
+
+	private void PlayerMovement()
+	{
+		//Basic Movement
+		transform.Rotate(0, Input.GetAxis("Horizontal") * Time.deltaTime * RotateSpeed, 0);
+		transform.Translate(0, 0, Input.GetAxis("Vertical") * Time.deltaTime * MoveSpeed);
+		//Slow down when backing up (back button is negative numbers)
+		MoveSpeed = Input.GetAxis("Vertical") <= 0 ? baseSpeed / 5 : baseSpeed;
+	}
 }
