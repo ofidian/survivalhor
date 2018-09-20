@@ -19,29 +19,24 @@ public class playerAttack : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		//when firing your weapon check to confirm bullets are above 0
-		if (Input.GetButtonDown("Action") && PlayerCharacter.GetComponent<playerController>().Bullets >= 1)
-		{
-			--PlayerCharacter.GetComponent<playerController>().Bullets;
-		}
+		
 	}
 
 	//Fire weapon and detect radius cycle through and find closest enemy in radius, reduce nearest monster hp
 	private void OnTriggerStay(Collider other)
 	{
-		
-
 		if (other.CompareTag("enemy"))
 		{
 			other.tag = "enemyActive";
 		}
 		
 		GameObject[] enemyArray = GameObject.FindGameObjectsWithTag("enemyActive");
+		int clipSize = PlayerCharacter.GetComponent<playerController>().clipSize;
 
 		float enemyTracker = Mathf.Infinity;
 		int updatedTracker = 0;
 		//when firing weapon check if enemy is in radius and you have amo if so, damage enemy - take out nearest 
-		if (Input.GetButtonDown("Action") && PlayerCharacter.GetComponent<playerController>().Bullets >= 1)
+		if (Input.GetButtonDown("Action") && clipSize >= 1)
 		{
 			for (int i = 0; i < enemyArray.Length; i++) 
 			{
